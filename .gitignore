@@ -1,0 +1,31 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+# Dependencies
+node_modules/
+# Next.js
+.next/
+*.tsbuildinfo
+# Python virtual environments
+.venv/
+.venv-ml/
+.venv311/
+venv/
+# Python cache
+__pycache__/
+*.py[cod]
+# ML datasets
+ml/datasets/
+# Runtime uploads
+public/uploads/
+# IDE
+.vscode/
+.idea/
+# OS
+.DS_Store
+Thumbs.db
+# Local Docker backup files
+.dockerignore.docker
+Dockerfile.docker
+docker-compose.docker.yml

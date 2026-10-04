@@ -1,0 +1,33 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Required system libraries for TensorFlow/OpenCV/Pillow
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# Copy inference code
+COPY inference ./inference
+
+# Copy trained model
+COPY models ./models
+
+ENV MODEL_PATH=/app/models/v1.0
+
+EXPOSE 8000
+
+CMD ["python", "-m", "uvicorn", "inference.main:app", "--host", "0.0.0.0", "--port", "8000"]
